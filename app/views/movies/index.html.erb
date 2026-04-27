@@ -1,0 +1,31 @@
+<h1>RottenPotatoes</h1>
+
+<%= link_to 'Adicionar Filme', new_movie_path %>
+
+<table>
+  <thead>
+    <tr>
+      <th id="title_header" class="<%= 'hilite' if @sort_by == 'title' %>">
+        <%= link_to 'Título', movies_path(sort_by: 'title'), id: :title_header %>
+      </th>
+      <th>Classificação</th>
+      <th id="release_date_header" class="<%= 'hilite' if @sort_by == 'release_date' %>">
+        <%= link_to 'Data de Lançamento', movies_path(sort_by: 'release_date'), id: :release_date_header %>
+      </th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @movies.each do |movie| %>
+      <tr>
+        <td><%= link_to movie.title, movie_path(movie), id: :title_header %></td>
+        <td><%= movie.rating %></td>
+        <td><%= link_to movie.release_date&.strftime('%d/%m/%Y'), movie_path(movie), id: :release_date_header %></td>
+        <td>
+          <%= link_to 'Editar', edit_movie_path(movie) %> |
+          <%= link_to 'Excluir', movie_path(movie), data: { turbo_method: :delete, turbo_confirm: 'Tem certeza?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
